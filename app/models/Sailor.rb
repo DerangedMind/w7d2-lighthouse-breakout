@@ -1,9 +1,16 @@
 class Sailor < ActiveRecord::Base
   # Associations
 
-  # Sailors belong to one ship
-  # Sailors have many different ranks, each with a different skill & level
   # Sailors have many duties
+  # Sailors have many ranks
 
-  # Create a method that displays each of the sailor's ranks (skills and levels)
+  has_and_belongs_to_many :duties, dependent: :destroy
+  has_many :ranks, dependent: :destroy
+
+  # Custom methods
+  before_save :add_shirt_color
+
+  def add_shirt_color
+    self.shirt_color = %w(blue red green purple).shuffle.first
+  end
 end
